@@ -1,0 +1,4 @@
+AuthUserFile /opt/minepeon/etc/password
+AuthType Basic
+AuthName "MinePeon"
+Require valid-user
