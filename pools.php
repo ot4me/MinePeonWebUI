@@ -2,103 +2,67 @@
 
 require('inc/cgminer.inc.php');
 
-if (isset($_POST['URL0'])) {
+
+// read the miner config file
+$minerConf = file_get_contents("/opt/minepeon/etc/miner.conf", true);
+
+// decode the json
+$data = json_decode($minerConf, true);
 
 
-	$newpool[0] = $_POST['URL0'] . ',' . $_POST['username0'] . ',' . $_POST['password0'];
-	$newpool[1] = $_POST['URL1'] . ',' . $_POST['username1'] . ',' . $_POST['password1'];
-	$newpool[2] = $_POST['URL2'] . ',' . $_POST['username2'] . ',' . $_POST['password2'];
-	//$newpool[3] = $_POST['URL3'] . ',' . $_POST['username3'] . ',' . $_POST['password3'];
-	//$newpool[4] = $_POST['URL4'] . ',' . $_POST['username4'] . ',' . $_POST['password4'];
+if (!empty($_POST['URL0']) and !empty($_POST['USER0']) and !empty($_POST['PASS0'])) {
 
-/*	for ($i = 0; $i <= 5 ;$i++) {
-		cgminer("disablepool", 0);
-		cgminer("removepool", 1);
-	}
-*/
+	// unset the pools
+	unset($data['pools']);
+	
+	// Construct pool 0
+	$pool = array(
+		"url" => $_POST['URL0'],
+		"user" => $_POST['USER0'],
+		"pass" => $_POST['PASS0'],
+	);
+	
+	// Set pool 0
+	$data['pools'][0] = $pool;
+	
+	// echo $_POST['URL0'] . $_POST['USER0'] . $_POST['PASS0'] ;
 
-	cgminer("removepool", 0);
-		sleep(1);
-	cgminer("removepool", 0);
-		sleep(1);
-	cgminer("removepool", 0);
-		sleep(1);
-	cgminer("removepool", 0);
-		sleep(1);
-	cgminer("removepool", 0);
-		sleep(1);
-	cgminer("removepool", 0);
-		sleep(1);
+	if (!empty($_POST['URL1']) and !empty($_POST['USER1']) and !empty($_POST['PASS1'])) {
+
+		// Construct pool 1
+		$pool = array(
+			"url" => $_POST['URL1'],
+			"user" => $_POST['USER1'],
+			"pass" => $_POST['PASS1'],
+		);
+	
+		// Set pool 1
+		$data['pools'][1] = $pool;
+	
+		// echo $_POST['URL1'] . $_POST['USER1'] . $_POST['PASS1'] ;
 		
-//	cgminer("addpool", "http://api.bitcoin.cz:8332/,MineForeman.REMOVE,REMOVE");
-//		sleep(1);
-
+		if (!empty($_POST['URL2']) and !empty($_POST['USER2']) and !empty($_POST['PASS2'])) {
+		
+			// Construct pool 2
+			$pool = array(
+				"url" => $_POST['URL2'],
+				"user" => $_POST['USER2'],
+				"pass" => $_POST['PASS2'],
+			);
 	
-	cgminer("addpool", "http://stratum.ozco.in:3333/,nrf.pps,pps");
-		sleep(1);
-	cgminer("addpool", "http://us.ozco.in:3333/,nrf.pps,pps");
-		sleep(1);
-	cgminer("addpool", "http://au.ozco.in:3333/,nrf.pps,pps");
-		sleep(1);
-	cgminer("switchpool", 1);
-		sleep(1);
-	cgminer("removepool", 0);
-/*	
-    cgminer("addpool", $newpool[0]);
-    cgminer("addpool", $newpool[1]);
-    cgminer("addpool", $newpool[2]);
-
-
-
-		cgminer("switchpool", 1);
-		cgminer("addpool", $newpool[1]);
-		cgminer("addpool", $newpool[2]);
-
-		cgminer("disablepool", 0);
-		cgminer("removepool", 0);
-
-
-	for ($i = 0; $i <= 2 ;$i++) {
-		cgminer("addpool", $newpool[$i]);
-		cgminer("disablepool", 0);
-		cgminer("removepool", 0);
+			// Set pool 2
+			$data['pools'][2] = $pool;
+		
+			// echo $_POST['URL2'] . $_POST['USER2'] . $_POST['PASS2'] ;
+		
+		}
 	}
 	
-	
-	for ($i = 0; $i <= 2 ;$i++) {
-		cgminer("addpool", $newpool[$i]);
-		//cgminer("removepool", $i);
-		//sleep(1);
-		//cgminer("addpool", $newpool[$i]);
-		//sleep(1);
-	}	
-
-	$responce = cgminer("removepool", 0);
-	$responce = cgminer("removepool", 1);
-	$responce = cgminer("removepool", 2);
-	$responce = cgminer("removepool", 3);
-	$responce = cgminer("removepool", 4);
-	$responce = cgminer("removepool", 5);
-	$responce = cgminer("removepool", 6);
-	$responce = cgminer("removepool", 7);
-	$responce = cgminer("removepool", 8);
-	$responce = cgminer("removepool", 9); */
-
-/*	$responce = cgminer("addpool", $newpool0);
-	$responce = cgminer("addpool", $newpool1);
-	$responce = cgminer("addpool", $newpool2);
-	$responce = cgminer("addpool", $newpool3);
-	$responce = cgminer("addpool", $newpool4); 
-
-	cgminer("switchpool", 1);
-
-	cgminer("removepool", 0);
-*/
-	cgminer("save", "/opt/minepeon/etc/miner.conf");
-
+	// Recode into JSON and save
+	file_put_contents("/opt/minepeon/etc/miner.conf", json_encode($data));
+	cgminer("restart");
+	sleep(60);
 }
-
-$pools = cgminer("pools", "");
 
 
 
@@ -166,18 +130,19 @@ $pools = cgminer("pools", "");
 
       <h1>Mining Pools<a name="settings">.</a></h1>
 	  <form name="input" action="/pools.php" method="post">
-	  URL: <input type="text" value="<?php echo $pools[POOLS][1][URL]; ?>" name="URL0">
-	  Username: <input type="text" value="<?php echo $pools[POOLS][1][User]; ?>" name="username0">
-	  Password: <input type="text" value="****" name="password0"><br>
-	  URL: <input type="text" value="<?php echo $pools[POOLS][2][URL]; ?>" name="URL1">
-	  Username: <input type="text" value="<?php echo $pools[POOLS][2][User]; ?>" name="username1">
-	  Password: <input type="text" value="****" name="password1"><br>
-	  URL: <input type="text" value="<?php echo $pools[POOLS][0][URL]; ?>" name="URL2">
-	  Username: <input type="text" value="<?php echo $pools[POOLS][0][User]; ?>" name="username2">
-	  Password: <input type="text" value="****" name="password2"><br>
+	  URL: <input type="text" value="<?php echo $data['pools'][0]['url']; ?>" name="URL0">
+	  Username: <input type="text" value="<?php echo $data['pools'][0]['user']; ?>" name="USER0">
+	  Password: <input type="text" value="<?php echo $data['pools'][0]['pass']; ?>" name="PASS0"><br>
+	  URL: <input type="text" value="<?php echo $data['pools'][1]['url']; ?>" name="URL1">
+	  Username: <input type="text" value="<?php echo $data['pools'][1]['user']; ?>" name="USER1">
+	  Password: <input type="text" value="<?php echo $data['pools'][1]['pass']; ?>" name="PASS1"><br>
+	  URL: <input type="text" value="<?php echo $data['pools'][2]['url']; ?>" name="URL2">
+	  Username: <input type="text" value="<?php echo $data['pools'][2]['user']; ?>" name="USER2">
+	  Password: <input type="text" value="<?php echo $data['pools'][2]['pass']; ?>" name="PASS2"><br>
 	  <input type="submit" value="Submit">
 	  </form>
-      <p>Use this form to change to your own mining account!</p> 
+      <p>Use this form to change to your own mining accounts!  Pressing submit will take 60 seconds as the miner restarts with the new configuration.</p> 
+	  <p><b>WARNING:</b> There is very little validation on these settings at the moment so make sure your settings are correct!</p>
 	  <p>While I don't mind if you leave my details you will be mining 
 	  using the MinePeon test account and any bitcoins generated will be concidered
 	  a dontation to the MinePeon project.</p>
