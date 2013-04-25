@@ -1,5 +1,7 @@
 <?php
-
+if ( ! isset($_SERVER['HTTPS'])) {
+   header('Location: https://' . $_SERVER["SERVER_NAME"] . $_SERVER['REQUEST_URI']);
+}
 
 create_graph("mhsav-hour.png", "-1h", "Hourly");
 create_graph("mhsav-day.png", "-1d", "Daily");
