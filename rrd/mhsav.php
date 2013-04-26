@@ -2,7 +2,7 @@
 
 $RRDPATH = '/opt/minepeon/http/rrd';
 
-require('/opt/minepeon/http/inc/cgminer.inc.php');
+require('miner.inc.php');
 
 if (!file_exists($RRDPATH . "/mhsav.rrd")) {
 
