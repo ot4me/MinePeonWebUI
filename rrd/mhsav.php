@@ -1,5 +1,7 @@
 <?php
 
+include('timezone.inc.php');
+
 $RRDPATH = '/opt/minepeon/http/rrd';
 
 require('miner.inc.php');

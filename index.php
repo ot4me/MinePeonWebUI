@@ -3,6 +3,9 @@
 include('ssl.inc.php');
 include('timezone.inc.php');
 
+
+
+
 create_graph("mhsav-hour.png", "-1h", "Hourly");
 create_graph("mhsav-day.png", "-1d", "Daily");
 create_graph("mhsav-week.png", "-1w", "Weekly");
@@ -10,19 +13,19 @@ create_graph("mhsav-month.png", "-1m", "Monthly");
 create_graph("mhsav-year.png", "-1y", "Yearly");
 
 function create_graph($output, $start, $title) {
-  $RRDPATH = '/opt/minepeon/http/rrd/';
+  $RRDPATH = '/opt/minepeon/var/rrd/';
   $options = array(
     "--slope-mode",
     "--start", $start,
     "--title=$title",
     "--vertical-label=Hash per seccond",
     "--lower=0",
-    "DEF:myghsav=" . $RRDPATH . "mhsav.rrd:mhsav:AVERAGE",
-    "CDEF:realspeed=myghsav,1000,*",
+    "DEF:hashrate=" . $RRDPATH . "hashrate.rrd:hashrate:AVERAGE",
+    "CDEF:realspeed=hashrate,1000,*",
     "LINE2:realspeed#FF0000"
   );
 
-  $ret = rrd_graph($RRDPATH . $output, $options);
+  $ret = rrd_graph("/opt/minepeon/http/rrd/" . $output, $options);
   if (! $ret) {
     echo "<b>Graph error: </b>".rrd_error()."\n";
   }
@@ -101,7 +104,7 @@ function create_graph($output, $start, $title) {
         </div>
 
 	<div>
-		<center>Update Time: <?php echo date('D, d M Y H:i:s T'); ?><center>
+		<center>Update Time: <?php echo date('D, d M Y H:i:s T'); echo '<br>' . $t .  '<br>'; echo $tz; ; ?><center>
 	</div>
 
 
