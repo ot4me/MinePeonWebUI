@@ -18,7 +18,7 @@ function create_graph($output, $start, $title) {
     "--slope-mode",
     "--start", $start,
     "--title=$title",
-    "--vertical-label=Hash per seccond",
+    "--vertical-label=Hash per second",
     "--lower=0",
     "DEF:hashrate=" . $RRDPATH . "hashrate.rrd:hashrate:AVERAGE",
     "CDEF:realspeed=hashrate,1000,*",
