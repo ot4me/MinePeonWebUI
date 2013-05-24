@@ -7,10 +7,10 @@ include('timezone.inc.php');
 
 include('head.php');
 include('menu.php');
+
 ?>
         <div class="container">
-                <h1>Settings</h1>
-             
+                <h1>About</h1> 
         </div>
 <?php
 

@@ -9,12 +9,12 @@
           <a class="brand" href="http://mineforeman.com/minepeon/">MinePeon</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-                          <li><a href="/">Graphs</a></li>
-              <li><a href="pools.php">Pools</a></li>
-                          <li><a href="miner.php">Stats</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-                          <li><a href="#license">License</a></li>
+                        <li><a href="/">Graphs</a></li>
+              		<li><a href="pools.php">Pools</a></li>
+                        <li><a href="settings.php">Settings</a></li>
+              		<li><a href="about.php">About</a></li>
+              		<li><a href="contact.php">Contact</a></li>
+                        <li><a href="license.php">License</a></li> 
             </ul>
           </div><!--/.nav-collapse -->
         </div>

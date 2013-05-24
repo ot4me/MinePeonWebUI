@@ -35,7 +35,7 @@ include('head.php');
 include('menu.php');
 ?>
         <div class="container">
-                <h1>Graphs<a name="graphs">.</a></h1>
+                <h1>Graphs</h1>
                 <div class=graph><img src="rrd/mhsav-hour.png" alt="mhsav.png" /></div>
                 <div class=graph><img src="rrd/mhsav-day.png" alt="mhsav.png" /><img src="rrd/mhsav-week.png" alt="mhsav.png" /></div>
                 <div class=graph><img src="rrd/mhsav-month.png" alt="mhsav.png" /><img src="rrd/mhsav-year.png" alt="mhsav.png" /></div>
