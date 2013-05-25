@@ -3,9 +3,6 @@
 include('ssl.inc.php');
 include('timezone.inc.php');
 
-
-
-
 create_graph("mhsav-hour.png", "-1h", "Hourly");
 create_graph("mhsav-day.png", "-1d", "Daily");
 create_graph("mhsav-week.png", "-1w", "Weekly");
@@ -42,7 +39,7 @@ include('menu.php');
         </div>
 
 	<div>
-		<center>Update Time: <?php echo date('D, d M Y H:i:s T'); echo '<br>' . $t .  '<br>'; echo $tz; ; ?><center>
+		<center>Update Time: <?php echo date('D, d M Y H:i:s T') ?><center>
 	</div>
 <?php
 

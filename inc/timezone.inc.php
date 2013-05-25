@@ -1,14 +1,12 @@
 <?php
 
+$timezone = file_get_contents("/opt/minepeon/etc/timezone");
 
+//$timezone = "Pacific/Auckland";
 
-// putenv("TZ=CET-1CEST");
+ini_set( 'date.timezone', $timezone );
 
-// putenv("TZ=America/Los_Angeles");
+putenv("TZ=" . $timezone);
 
-putenv('TZ=Pacific/Auckland');
-
-date_default_timezone_set('Pacific/Auckland');
-// date_default_timezone_set('UTC');
-// date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set($timezone);
 
