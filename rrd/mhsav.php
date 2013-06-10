@@ -27,7 +27,7 @@ $t = time();
 
 $return = cgminer("summary", "");
 
-$HSav = $return['SUMMARY'][0]['MHSav'] * 1000000;
+$HSav = $return['SUMMARY'][0]['MHSav'] * 1000;
 
 $mhsav = $t . ':' . $HSav;
 
